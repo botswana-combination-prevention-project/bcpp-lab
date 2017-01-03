@@ -1,7 +1,7 @@
-from edc_lab.aliquot.aliquot_type import AliquotType
-from edc_lab.aliquot.processing_profile import ProcessingProfile
+from edc_lab.aliquot_type import AliquotType
+from edc_lab.processing_profile import ProcessingProfile
 from edc_lab.lab_profile import LabProfile
-from edc_lab.requisition.requisition_panel import RequisitionPanel
+from edc_lab.requisition_panel import RequisitionPanel
 from edc_lab.site_lab_profiles import site_lab_profiles
 
 
@@ -30,6 +30,10 @@ lab_profile.add_processing_profile(pbmc_processing)
 viral_load_panel = RequisitionPanel('Viral Load', wb)  # link this to the visit_schedule
 viral_load_panel.processing_profile = viral_load_processing
 lab_profile.add_panel(viral_load_panel)
+
+# TODO, add processing profile details
+microtube_panel = RequisitionPanel('Microtube', wb)  # link this to the visit_schedule
+lab_profile.add_panel(microtube_panel)
 
 rdb_panel = RequisitionPanel('Research Blood Draw', wb)  # link this to the visit_schedule
 lab_profile.add_panel(rdb_panel)
