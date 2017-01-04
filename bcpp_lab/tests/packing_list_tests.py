@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from edc.lab.lab_profile.classes import site_lab_profiles
+from edc.lab.site_labs import site_labs
 
 from bhp066.apps.bcpp_lab.models import AliquotType, Panel
 from bhp066.apps.bcpp_lab.tests.factories import SubjectRequisitionFactory
@@ -36,7 +36,7 @@ class PackingListTests(BaseScheduledModelTestCase):
             subject_visit=self.subject_visit_male_annual,
             report_datetime=report_datetime)
         # receive
-        lab_profile = site_lab_profiles.get(subject_requisition._meta.object_name)
+        lab_profile = site_labs.get(subject_requisition._meta.object_name)
         receive = lab_profile().receive(subject_requisition)
         identifiers = '\n'.join([a.aliquot_identifier for a in Aliquot.objects.filter(receive=receive)])
         packing_list = PackingListFactory(list_items=identifiers)

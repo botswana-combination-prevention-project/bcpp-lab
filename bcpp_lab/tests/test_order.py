@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 
 from edc_constants.constants import NEW, POS, NEG, CLOSED, YES, NO
 from bhp066.apps.bcpp_subject.constants import POC_VIRAL_LOAD, VIRAL_LOAD
-from edc.lab.lab_profile.classes import site_lab_profiles
+from edc.lab.site_labs import site_labs
 from edc.core.bhp_variables.models import StudySite
 
 from bhp066.apps.bcpp_lab.models import AliquotType, Panel
@@ -186,7 +186,7 @@ class TestOrder(BaseRuleGroupTestSetup):
         pre_order1 = PreOrder.objects.all()[0]
 
         # Process the primary aliquot
-        lab_profile = site_lab_profiles.get('SubjectRequisition')
+        lab_profile = site_labs.get('SubjectRequisition')
         lab_profile().receive(SubjectRequisition.objects.get(panel__name='Viral Load'))
         self.assertEqual(Receive.objects.all().count(), 1)
         self.assertEqual(Aliquot.objects.all().count(), 1)

@@ -4,7 +4,7 @@ from django.db.models import get_app, get_models
 from django.test import TestCase
 
 from edc.core.bhp_variables.models import StudySite
-from edc.lab.lab_profile.classes import site_lab_profiles
+from edc.lab.site_labs import site_labs
 from edc_base.encrypted_fields import FieldCryptor
 from edc.device.sync.classes import SerializeToTransaction
 from edc.lab.lab_profile.exceptions import AlreadyRegistered as AlreadyRegisteredLabProfile
@@ -28,7 +28,7 @@ class NaturalKeyTests(TestCase):
 
     def setUp(self):
         try:
-            site_lab_profiles.register(BcppSubjectProfile())
+            site_labs.register(BcppSubjectProfile())
         except AlreadyRegisteredLabProfile:
             pass
         BcppAppConfiguration()
@@ -76,7 +76,7 @@ class NaturalKeyTests(TestCase):
         subjects_requisition.is_receive = True
         subjects_requisition.is_receive_datetime = datetime.now()
         subjects_requisition.save()
-        lab_profile = site_lab_profiles.get(subjects_requisition._meta.object_name)
+        lab_profile = site_labs.get(subjects_requisition._meta.object_name)
         lab_profile().receive(subjects_requisition)
         receive = Receive.objects.all()[0]
         self.assertEqual(Aliquot.objects.all().count(), 1)

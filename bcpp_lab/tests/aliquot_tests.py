@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from edc.lab.lab_requisition.actions import flag_as_received
-from edc.lab.lab_profile.classes import site_lab_profiles
+from edc.lab.site_labs import site_labs
 
 from bhp066.apps.bcpp_lab.models import AliquotType, Panel, Receive
 from bhp066.apps.bcpp_lab.tests.factories import SubjectRequisitionFactory
@@ -31,7 +31,7 @@ class TestAliquots(BaseScheduledModelTestCase):
             panel=panel,
             aliquot_type=AliquotType.objects.get(alpha_code='WB'))
         # receive
-        lab_profile = site_lab_profiles.get(subject_requisition._meta.object_name)
+        lab_profile = site_labs.get(subject_requisition._meta.object_name)
         receive = lab_profile().receive(subject_requisition)
         # assert primary aliquot
         try:
